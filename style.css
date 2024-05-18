@@ -1,9 +1,47 @@
 body {
     text-align: center;
+    background-color: #141414;
 }
 
 #board {
-    background-color: black;
-    border-top: 5px solid orange;
-    border-bottom: 5px solid orange;
+    background-color: #0E0E0E;
+    border-top: 5px solid #ff7f50;
+    border-bottom: 5px solid #ff7f50;
+    position: relative;
+}
+
+#header {
+    margin-top: 50px;
+}
+
+#title {
+    color: #ff7f50;
+    font-family: 'Arial', monospace;
+    font-size: 48px;
+    text-transform: uppercase;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+#com {
+    color: white;
+    font-size: 24px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: lighter;
+}
+
+span {
+    animation: wave 1s infinite alternate;
+}
+
+@keyframes wave {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

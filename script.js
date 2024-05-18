@@ -85,11 +85,12 @@ window.onload = function() {
  function update() {
     requestAnimationFrame(update);
     context.clearRect(0, 0, boardWidth, boardHeight);
+
     
     switch (gameState) {
 
         case 'GAME' : {
-            
+            drawCentralLine();
             context.fillRect(player1.positionX, player1.positionY, player1.width, player1.height);
             // PLAYER 1
 
@@ -227,15 +228,18 @@ function keyHandler(e) {
     
 }
 
+
 //Out of bound player detection
 function outOfBounds(yPosition) {
     return ((yPosition <= 0) || yPosition >= (boardHeight - playerHeight));
 }
 
+
 //Out of bound ball detection
 function ballOutOfBounds(yPosition) {
     return ((yPosition <= 0) || yPosition >= (boardHeight - ballHeight));
 }
+
 
 //Ball --> Player Collision detection
 function detectCollision(ball, player) {
@@ -245,6 +249,7 @@ function detectCollision(ball, player) {
         ball.positionY < player.positionY + player.height &&
         ball.positionY + ball.height > player.positionY;
 }
+
 
 //START Text management
 function drawText() {
@@ -258,10 +263,20 @@ function clearText() {
 }
 
 var isTextVisible = true;
-
 setInterval(function () {
     isTextVisible = !isTextVisible;
 }, 750);
+
+
+//Cerntral line
+function drawCentralLine() {
+    context.strokeStyle = 'rgba(30, 30, 30, 0.3)';
+    context.lineWidth = 5;
+    context.beginPath();
+    context.moveTo(boardWidth / 2, 0);
+    context.lineTo(boardWidth / 2, boardHeight);
+    context.stroke();
+}
 
 
 
