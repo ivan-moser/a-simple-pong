@@ -33,3 +33,41 @@ body {
 span {
     animation: wave 1s infinite alternate;
 }
+
+#footer {
+    font-family: "Shadows Into Light", cursive;
+    font-weight: 400;
+    font-style: normal;
+    color: #D6D6D6;
+    letter-spacing: 3px;
+    text-align: center;
+    position: relative;
+}
+
+#footer-content {
+    display: flex;
+    justify-content: center;
+}
+
+.credits {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    margin: auto;
+    width: 500px;
+}
+
+td  {
+    width: 250px;
+}
+
+a , a:visited, a:active, a:focus {
+    color:#D6D6D6;
+    text-decoration: none;
+}
+
+a:hover {
+    font-size: 25px;
+    color: #ff7f50;
+}
