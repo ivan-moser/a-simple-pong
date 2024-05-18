@@ -101,7 +101,7 @@ window.onload = function() {
             //SB-PLAYER2
             context.fillStyle = 'rgba(48, 48, 48, 0.2)';
             context.font = "bold 300px impact";
-            context.fillText(player1Score,((boardWidth/4)*3)-100,(boardWidth/2)+100);
+            context.fillText(player2Score,((boardWidth/4)*3)-100,(boardWidth/2)+100);
             // PLAYER 1
 
             context.fillStyle = '#ff7f50';
