@@ -70,7 +70,16 @@ window.onload = function() {
 
     requestAnimationFrame(update);
 
-    document.addEventListener('keydown', movePlayer)
+    document.addEventListener('keydown', handleKeyDown)
+
+    function handleKeyDown(e) {
+        if (gameState === 'START') {
+            context.fillRect(0,0, boardWidth, boardHeight);
+            gameState = 'GAME';
+        } else {
+            movePlayer(e);
+        }
+    }
 }
 
  function update() {
@@ -81,6 +90,7 @@ window.onload = function() {
 
         case 'GAME' : {
             
+            context.fillRect(player1.positionX, player1.positionY, player1.width, player1.height);
             // PLAYER 1
 
             context.fillStyle = '#ff7f50';
@@ -137,6 +147,7 @@ window.onload = function() {
                 ball.velocityX *= -1;   // quando 
                 console.log(player2Score);
             }
+            break;
         }
         
         case 'START' : {
@@ -154,11 +165,12 @@ window.onload = function() {
             context.fillRect(ballDefaultX, ballDefaultY, ball.width, ball.height);
 
             //TEXT
-            //todo
-            //setInterval(writeText('START'), 1000);
 
+            if (isTextVisible) {
+                drawText();
+            }
         }
-
+        break;
     }
 }
 
@@ -179,14 +191,17 @@ function movePlayer(e) {
     }
 }
 
+//Out of bound player detection
 function outOfBounds(yPosition) {
     return ((yPosition <= 0) || yPosition >= (boardHeight - playerHeight));
 }
 
+//Out of bound ball detection
 function ballOutOfBounds(yPosition) {
     return ((yPosition <= 0) || yPosition >= (boardHeight - ballHeight));
 }
 
+//Ball --> Player Collision detection
 function detectCollision(ball, player) {
     return ball.positionX < player.positionX + player.width &&
         ball.positionX + ball.width > player.positionX &&
@@ -195,8 +210,23 @@ function detectCollision(ball, player) {
         ball.positionY + ball.height > player.positionY;
 }
 
-function writeText(text) {
-        //TODO
+//START Text management
+function drawText() {
+    context.font = "bold 40px Silkscreen"
+    context.fillStyle = '#ff7f50';
+    context.fillText("PRESS SOMETHING TO START", (boardWidth/2) - 375, boardHeight/4);
 }
+
+function clearText() {
+    context.clearRect(0, 0, boardWidth, boardHeight);
+}
+
+var isTextVisible = true;
+
+setInterval(function () {
+    isTextVisible = !isTextVisible;
+}, 500);
+
+
 
  
