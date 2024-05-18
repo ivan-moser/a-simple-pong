@@ -7,6 +7,7 @@ let board;
 let boardWidth = 900;
 let boardHeight = 900;
 let context;
+let maxScore = 1;
 
 // PALLA
 
@@ -86,6 +87,9 @@ window.onload = function() {
     requestAnimationFrame(update);
     context.clearRect(0, 0, boardWidth, boardHeight);
 
+    if (player1Score == maxScore || player2Score == maxScore) {
+        gameState = 'WINNER';
+    }
     
     switch (gameState) {
 
@@ -104,7 +108,7 @@ window.onload = function() {
             context.fillText(player2Score,((boardWidth/4)*3)-100,(boardWidth/2)+100);
 
             // PLAYER 1
-            
+
             context.fillStyle = '#ff7f50';
             let nextPlayer1Y = player1.positionY + player1.velocity;
             // devo verificare che la posizione non sia fuori dai bordi
@@ -187,7 +191,7 @@ window.onload = function() {
             context.fillText('>> Press \u25BC to move player 2 DOWN', (boardWidth/2) - 375, ((boardHeight/4)*3)+180);
 
             if (isTextVisible) {
-                drawText();
+                drawText('>> PRESS SOMETHING TO START', (boardWidth/2) - 375);
             }
         }
         break;
@@ -208,6 +212,7 @@ window.onload = function() {
             context.fillStyle = '#ff7f50';
             context.fillRect(player1.positionX, player1.positionY, player1.width, player1.height);
 
+            //RESET
             context.fillStyle = 'rgba(149, 149, 149, 0.5)';
             context.font = "italic 32px vt323"
             context.fillText('>> Press R to restart the game', (boardWidth/2) - 375, ((boardHeight/4)*3));
@@ -221,13 +226,42 @@ window.onload = function() {
             context.fillRect(ball.positionX, ball.positionY, ball.width, ball.height);
 
             if (isTextVisible) {
-                drawText();
+                drawText('>> PRESS SOMETHING TO START', (boardWidth/2) - 375);
             }
 
         }
         break;
+
+        case 'WINNER' : {
+            context.clearRect(0, 0, boardWidth, boardHeight);
+
+            //SCOREBOARDS GENERATION
+            //SB-PLAYER1
+            context.fillStyle = 'rgba(48, 48, 48, 0.2)';
+            context.font = "bold 300px impact";
+            context.fillText(player1Score,(boardWidth/4)-50,(boardWidth/2)+100);
+            //SB-PLAYER2
+            context.fillStyle = 'rgba(48, 48, 48, 0.2)';
+            context.font = "bold 300px impact";
+            context.fillText(player2Score,((boardWidth/4)*3)-100,(boardWidth/2)+100);
+
+            //WINNER
+            if (isTextVisible) {
+                drawText(player1Score==10 ? 'PLAYER 1 HAS WON THE GAME!' : 'PLAYER 1 HAS WON THE GAME!', (boardWidth/2) - 370);
+            }
+
+            //TEXT
+            context.fillStyle = 'rgba(149, 149, 149, 0.5)';
+            context.font = "italic 32px vt323"
+            context.fillText('>> Press R to restart the game', (boardWidth/2) - 375, ((boardHeight/4)*3));
+        }
     }
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////
+////////////////////////////// FUNCTIONS //////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 //  KEYS EVENT HANDLER
 
@@ -255,12 +289,17 @@ function keyHandler(e) {
         gameState = 'GAME';
     } 
     // R for restart
-    else if (e.code == "KeyR" && gameState == 'PAUSE') {
-        player1Score = 0;
-        player2Score = 0;
+    else if (e.code == "KeyR" && ((gameState == 'PAUSE') || (gameState == 'WINNER'))) {
+        statsReset();
         gameState = 'START';
     }
     
+}
+
+//Stats reset
+function statsReset() {
+    player1Score = 0;
+    player2Score = 0;
 }
 
 
@@ -287,10 +326,10 @@ function detectCollision(ball, player) {
 
 
 //START Text management
-function drawText() {
+function drawText(text, x) {
     context.font = "bold 35px Silkscreen"
     context.fillStyle = '#ff7f50';
-    context.fillText(">> PRESS SOMETHING TO START", (boardWidth/2) - 375, boardHeight/4);
+    context.fillText(text, x, boardHeight/4);
 }
 
 function clearText() {
