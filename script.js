@@ -77,7 +77,7 @@ window.onload = function() {
             context.fillRect(0,0, boardWidth, boardHeight);
             gameState = 'GAME';
         } else {
-            movePlayer(e);
+            keyHandler(e);
         }
     }
 }
@@ -165,16 +165,43 @@ window.onload = function() {
             context.fillRect(ballDefaultX, ballDefaultY, ball.width, ball.height);
 
             //TEXT
+            context.fillStyle = 'rgba(149, 149, 149, 0.5)';
+            context.font = "italic 32px vt323"
+            context.fillText('>> Press ESC to pause the game', (boardWidth/2) - 375, ((boardHeight/4)*3));
+            context.fillText('>> Press W to move player 1 UP', (boardWidth/2) - 375, ((boardHeight/4)*3)+60);
+            context.fillText('>> Press S to move player 1 DOWN', (boardWidth/2) - 375, ((boardHeight/4)*3)+90);
+
+            context.fillText(">> Press \u25B2 to move player 2 UP", (boardWidth/2) - 375, ((boardHeight/4)*3)+150);
+            context.fillText('>> Press \u25BC to move player 2 DOWN', (boardWidth/2) - 375, ((boardHeight/4)*3)+180);
 
             if (isTextVisible) {
                 drawText();
             }
         }
         break;
+
+        case 'PAUSE' : {
+            context.fillStyle = '#ff7f50';
+            context.fillRect(player1.positionX, player1.positionY, player1.width, player1.height);
+
+            //PLAYER 2
+            context.fillStyle = '#ff7f50';
+            context.fillRect(player2.positionX, player2.positionY, player2.width, player2.height);
+
+            //BALL
+            context.fillStyle = '#ff7f50';
+            context.fillRect(ball.positionX, ball.positionY, ball.width, ball.height);
+
+            if (isTextVisible) {
+                drawText();
+            }
+
+        }
+        break;
     }
 }
 
-function movePlayer(e) {
+function keyHandler(e) {
     // PLAYER 1
     if (e.code == 'KeyW') {
         player1.velocity = -3;
@@ -187,8 +214,17 @@ function movePlayer(e) {
         player2.velocity = -3;
     }
     else if(e.code == 'ArrowDown'){
-        player2.velocity = 3 
+        player2.velocity = 3; 
     }
+    // ESC in game
+     else if (e.code == "Escape" && gameState == 'GAME') {
+        gameState = 'PAUSE';
+    } 
+    // ESC in pause
+    else if (e.code == "Escape" && gameState == 'PAUSE') {
+        gameState = 'GAME';
+    }
+    
 }
 
 //Out of bound player detection
@@ -212,9 +248,9 @@ function detectCollision(ball, player) {
 
 //START Text management
 function drawText() {
-    context.font = "bold 40px Silkscreen"
+    context.font = "bold 35px Silkscreen"
     context.fillStyle = '#ff7f50';
-    context.fillText("PRESS SOMETHING TO START", (boardWidth/2) - 375, boardHeight/4);
+    context.fillText(">> PRESS SOMETHING TO START", (boardWidth/2) - 375, boardHeight/4);
 }
 
 function clearText() {
@@ -225,7 +261,7 @@ var isTextVisible = true;
 
 setInterval(function () {
     isTextVisible = !isTextVisible;
-}, 500);
+}, 750);
 
 
 
