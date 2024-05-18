@@ -92,6 +92,16 @@ window.onload = function() {
         case 'GAME' : {
             drawCentralLine();
             context.fillRect(player1.positionX, player1.positionY, player1.width, player1.height);
+
+            //SCOREBOARDS GENERATION
+            //SB-PLAYER1
+            context.fillStyle = 'rgba(48, 48, 48, 0.2)';
+            context.font = "bold 300px impact";
+            context.fillText(player1Score,(boardWidth/4)-50,(boardWidth/2)+100);
+            //SB-PLAYER2
+            context.fillStyle = 'rgba(48, 48, 48, 0.2)';
+            context.font = "bold 300px impact";
+            context.fillText(player1Score,((boardWidth/4)*3)-100,(boardWidth/2)+100);
             // PLAYER 1
 
             context.fillStyle = '#ff7f50';
@@ -145,7 +155,7 @@ window.onload = function() {
                 ball.positionY = ballDefaultY;
 
                 player1Score++;
-                ball.velocityX *= -1;   // quando 
+                ball.velocityX *= -1; 
                 console.log(player2Score);
             }
             break;
