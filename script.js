@@ -102,8 +102,9 @@ window.onload = function() {
             context.fillStyle = 'rgba(48, 48, 48, 0.2)';
             context.font = "bold 300px impact";
             context.fillText(player2Score,((boardWidth/4)*3)-100,(boardWidth/2)+100);
-            // PLAYER 1
 
+            // PLAYER 1
+            
             context.fillStyle = '#ff7f50';
             let nextPlayer1Y = player1.positionY + player1.velocity;
             // devo verificare che la posizione non sia fuori dai bordi
@@ -192,8 +193,24 @@ window.onload = function() {
         break;
 
         case 'PAUSE' : {
+
+            //SCOREBOARDS GENERATION
+            //SB-PLAYER1
+            context.fillStyle = 'rgba(48, 48, 48, 0.2)';
+            context.font = "bold 300px impact";
+            context.fillText(player1Score,(boardWidth/4)-50,(boardWidth/2)+100);
+            //SB-PLAYER2
+            context.fillStyle = 'rgba(48, 48, 48, 0.2)';
+            context.font = "bold 300px impact";
+            context.fillText(player2Score,((boardWidth/4)*3)-100,(boardWidth/2)+100);
+
+            //PLAYER 1
             context.fillStyle = '#ff7f50';
             context.fillRect(player1.positionX, player1.positionY, player1.width, player1.height);
+
+            context.fillStyle = 'rgba(149, 149, 149, 0.5)';
+            context.font = "italic 32px vt323"
+            context.fillText('>> Press R to restart the game', (boardWidth/2) - 375, ((boardHeight/4)*3));
 
             //PLAYER 2
             context.fillStyle = '#ff7f50';
@@ -211,6 +228,8 @@ window.onload = function() {
         break;
     }
 }
+
+//  KEYS EVENT HANDLER
 
 function keyHandler(e) {
     // PLAYER 1
@@ -234,6 +253,12 @@ function keyHandler(e) {
     // ESC in pause
     else if (e.code == "Escape" && gameState == 'PAUSE') {
         gameState = 'GAME';
+    } 
+    // R for restart
+    else if (e.code == "KeyR" && gameState == 'PAUSE') {
+        player1Score = 0;
+        player2Score = 0;
+        gameState = 'START';
     }
     
 }
