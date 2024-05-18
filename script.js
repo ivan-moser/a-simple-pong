@@ -7,7 +7,7 @@ let board;
 let boardWidth = 900;
 let boardHeight = 900;
 let context;
-let maxScore = 1;
+let maxScore = 10;
 
 // PALLA
 
@@ -63,11 +63,6 @@ window.onload = function() {
     board.height = boardHeight;
     board.width = boardWidth;
     context = board.getContext('2d');
-    
-    // GIOCATORI
-
-    /* context.fillStyle = '#ff7f50';
-    context.fillRect(player1.positionX, player1.positionY, player1.width, player1.height); */
 
     requestAnimationFrame(update);
 
@@ -90,6 +85,12 @@ window.onload = function() {
     if (player1Score == maxScore || player2Score == maxScore) {
         gameState = 'WINNER';
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////// GAME CASES /////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
+
     
     switch (gameState) {
 
