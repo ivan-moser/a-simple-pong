@@ -142,9 +142,9 @@ window.onload = function() {
                 ball.velocityY *= -1;
             }
 
+            // COLLISION
             if (detectCollision(ball, player1) || detectCollision(ball, player2)) {
-                ball.velocityX *= -1;
-                ball.velocityY *= -1;
+                updateBallVelocity(ball, detectCollision(ball, player1) ? player1 : player2);
             }
 
             if (ball.positionX <= 0) {
@@ -319,10 +319,27 @@ function ballOutOfBounds(yPosition) {
 //Ball --> Player Collision detection
 function detectCollision(ball, player) {
     return ball.positionX < player.positionX + player.width &&
-        ball.positionX + ball.width > player.positionX &&
+    ball.positionX + ball.width > player.positionX &&
+    ball.positionY < player.positionY + player.height &&
+    ball.positionY + ball.height > player.positionY;
+}
 
-        ball.positionY < player.positionY + player.height &&
-        ball.positionY + ball.height > player.positionY;
+//Angle of direction
+function angleCalculator(ball, player) {
+    let mid = player.positionY + (player.height / 2);
+    let dist = (ball.positionY + (ball.height / 2)) - mid;
+    let bounceAngle = dist / (player.height / 2) * (Math.PI / 4);
+
+    return bounceAngle;
+}
+
+//Update of the velocity with the bounceAngle
+function updateBallVelocity(ball, player) {
+    let angle = angleCalculator(ball, player);
+    let speed = Math.sqrt(ball.velocityX * ball.velocityX + ball.velocityY * ball.velocityY); 
+
+    ball.velocityX = (player === player1 ? 1 : -1) * speed * Math.cos(angle);
+    ball.velocityY = speed * Math.sin(angle);
 }
 
 
